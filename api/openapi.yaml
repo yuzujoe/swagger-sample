@@ -1,0 +1,268 @@
+openapi: 3.0.0
+info:
+  description: this api practice inazma
+  license:
+    name: MIT
+    url: http://opensource.org/licenses/MIT
+  termsOfService: http://example.com/terms/
+  title: inazma-sample
+  version: 1.0.0
+servers:
+- description: Development server
+  url: http://localhost:8080
+paths:
+  /users/siginup:
+    post:
+      description: Create a new User
+      requestBody:
+        content:
+          application/json:
+            example:
+              phone: 090-6940-4384
+              password: yuzu0708
+            schema:
+              $ref: '#/components/schemas/User'
+        description: user to create
+      responses:
+        200:
+          description: CREATED_USER
+        400:
+          description: Bad request.
+        500:
+          description: INTERNAL_SERVER_ERROR.
+      summary: Create a new User
+      tags:
+      - users
+  /users/siginin:
+    post:
+      description: Login user
+      requestBody:
+        content:
+          application/json:
+            example:
+              phone: 090-6940-4384
+              password: yuzu0708
+            schema:
+              $ref: '#/components/schemas/User'
+        description: user to login
+      responses:
+        200:
+          content:
+            application/json:
+              example:
+                token: token
+          description: LOGIN
+      summary: Login user
+      tags:
+      - users
+  /users/logout:
+    post:
+      description: logout
+      responses:
+        default:
+          content: {}
+          description: logged out
+      security:
+      - bearerAuth: []
+      summary: logout user
+      tags:
+      - users
+  /users/update:
+    put:
+      description: update user infomation
+      responses:
+        200:
+          content: {}
+          description: UPDATED_USER
+        400:
+          content: {}
+          description: Bad request.
+        401:
+          content: {}
+          description: Unauthorized
+        500:
+          content: {}
+          description: INTERNAL_SERVER_ERROR.
+      security:
+      - bearerAuth: []
+      summary: update user
+      tags:
+      - users
+  /reservations/:id:
+    delete:
+      description: delete reservation
+      parameters:
+      - description: reservation_id on delete
+        explode: false
+        in: path
+        name: reservation_id
+        required: true
+        schema:
+          format: int64
+          type: integer
+        style: simple
+      responses:
+        400:
+          content: {}
+          description: Invalid ID supplied
+        401:
+          content: {}
+          description: Unauthorized
+        404:
+          content: {}
+          description: Reservation not found
+        500:
+          content: {}
+          description: internal server error
+      security:
+      - bearerAuth: []
+      summary: delete reservation
+      tags:
+      - reservations
+    get:
+      description: get reservation list
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Reservation'
+          description: successful operation
+      security:
+      - bearerAuth: []
+      summary: get reservation list
+      tags:
+      - reservations
+    put:
+      description: update reservation
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Reservation'
+      responses:
+        200:
+          content: {}
+          description: success updated
+        400:
+          content: {}
+          description: bad request
+        401:
+          content: {}
+          description: Unauthorized
+        500:
+          content: {}
+          description: internal server error
+      security:
+      - bearerAuth: []
+      summary: update reservation
+      tags:
+      - reservations
+  /reservations:
+    post:
+      description: create reservation
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Reservation'
+        required: true
+      responses:
+        200:
+          content: {}
+          description: created
+        400:
+          content: {}
+          description: bad request
+        401:
+          content: {}
+          description: Unauthorized
+        500:
+          content: {}
+          description: internal server error
+      security:
+      - bearerAuth: []
+      summary: create reservation
+      tags:
+      - reservations
+components:
+  schemas:
+    User:
+      example:
+        lastName: lastName
+        address3: address3
+        prefecture: prefecture
+        city: city
+        address2: address2
+        address1: address1
+        zipcode: zipcode
+        firstName: firstName
+        password: password
+        phone: phone
+        id: 0
+        email: email
+        username: username
+      properties:
+        id:
+          format: int64
+          type: integer
+        username:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        password:
+          format: password
+          type: string
+        phone:
+          type: string
+        prefecture:
+          description: 都道府県
+          type: string
+        city:
+          description: 市区町村
+          type: string
+        address1:
+          description: 町名
+          type: string
+        address2:
+          description: 番地
+          type: string
+        address3:
+          description: 建物名
+          type: string
+        zipcode:
+          description: 郵便番号
+          type: string
+      type: object
+    Reservation:
+      example:
+        purpose: purpose
+        reservationTime: 2000-01-23T04:56:07.000+00:00
+        reservationType: 6
+        id: 0
+        reservationDate: 2000-01-23T04:56:07.000+00:00
+      properties:
+        id:
+          format: int64
+          type: integer
+        reservationDate:
+          format: date-time
+          type: string
+        reservationTime:
+          format: date-time
+          type: string
+        reservationType:
+          format: int4
+          type: integer
+        purpose:
+          type: string
+      type: object
+  securitySchemes:
+    bearerAuth:
+      bearerFormat: JWT
+      scheme: bearer
+      type: http
