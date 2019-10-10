@@ -13,8 +13,9 @@ import (
 	"time"
 )
 
+// Reservation type of reservations table
 type Reservation struct {
-	Id int64 `json:"id,omitempty"`
+	ID int64 `json:"id,omitempty"`
 
 	ReservationDate time.Time `json:"reservationDate,omitempty"`
 
@@ -23,4 +24,8 @@ type Reservation struct {
 	ReservationType int8 `json:"reservationType,omitempty"`
 
 	Purpose string `json:"purpose,omitempty"`
+
+	UpdatedAt time.Time `gorm:"column:updated_at" json:"updated_at" form:"updated_at"`
+
+	CreatedAt time.Time `gorm:"column:created_at" json:"created_at" form:"created_at"`
 }

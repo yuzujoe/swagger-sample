@@ -9,8 +9,11 @@
 
 package models
 
+import "time"
+
+// User type of users table
 type User struct {
-	Id int64 `json:"id,omitempty"`
+	ID int64 `json:"id,omitempty"`
 
 	Username string `json:"username,omitempty"`
 
@@ -24,21 +27,19 @@ type User struct {
 
 	Phone string `json:"phone,omitempty"`
 
-	// 都道府県
-	Prefecture string `json:"prefecture,omitempty"`
+	Prefecture string `json:"prefecture,omitempty"` // 都道府県
 
-	// 市区町村
-	City string `json:"city,omitempty"`
+	City string `json:"city,omitempty"` // 市区町村
 
-	// 町名
-	Address1 string `json:"address1,omitempty"`
+	Address1 string `json:"address1,omitempty"` // 町名
 
-	// 番地
-	Address2 string `json:"address2,omitempty"`
+	Address2 string `json:"address2,omitempty"` // 番地
 
-	// 建物名
-	Address3 string `json:"address3,omitempty"`
+	Address3 string `json:"address3,omitempty"` // 建物名
 
-	// 郵便番号
-	Zipcode string `json:"zipcode,omitempty"`
+	Zipcode string `json:"zipcode,omitempty"` // 郵便番号
+
+	UpdatedAt time.Time `gorm:"column:updated_at" json:"updated_at" form:"updated_at"`
+
+	CreatedAt time.Time `gorm:"column:created_at" json:"created_at" form:"created_at"`
 }
