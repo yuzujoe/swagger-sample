@@ -10,7 +10,7 @@ COPY go.sum .
 RUN go mod download
 COPY . .
 
-RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -installsuffix cgo -o openapi .
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -installsuffix cgo -o build ./main.go
 
 FROM alpine
 
@@ -19,6 +19,6 @@ RUN apk update \
   && apk add --no-cache ca-certificates
 
 ENV GIN_MODE=release
-COPY --from=builder /app/openapi ./
+COPY --from=builder /app/build /app/build
 
-ENTRYPOINT ["./openapi"]
+ENTRYPOINT ["app/build"]
