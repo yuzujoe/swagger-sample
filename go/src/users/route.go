@@ -8,6 +8,6 @@ import (
 func AddRoute(r *gin.RouterGroup) {
 	g := r.Group("/users")
 	{
-		g.GET("/signup", handleSignup)
+		g.POST("/signup", handleSignup)
 	}
 }
