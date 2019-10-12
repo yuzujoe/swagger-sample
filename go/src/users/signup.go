@@ -25,6 +25,22 @@ func handleSignup(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, err)
 	}
 
+	// 電話番号が空でないか確認
+	if reqData.Phone == "" {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": "電話番号を入力してください",
+		})
+		return
+	}
+
+	// パスワードが空でないか確認
+	if reqData.Password == "" {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": "パスワードを入力してください",
+		})
+		return
+	}
+
 	// userの作成
 	if err := createUser(reqData.Phone, reqData.Password); err != "true" {
 		log.Fatal(err)
