@@ -16,7 +16,7 @@ type ReqData struct {
 	Password string `json:"password"`
 }
 
-func handleSignup(c *gin.Context) {
+func HandleSignup(c *gin.Context) {
 	var reqData ReqData
 
 	// json形式なのかチェック
