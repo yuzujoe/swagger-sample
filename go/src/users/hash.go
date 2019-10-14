@@ -1,9 +1,9 @@
-package crypt
+package users
 
 import "golang.org/x/crypto/bcrypt"
 
-// PasswordHash ハッシュ化したパスワードの作成
-func PasswordHash(pw string) (string, error) {
+// passwordHash ハッシュ化したパスワードの作成
+func passwordHash(pw string) (string, error) {
 	hash, err := bcrypt.GenerateFromPassword([]byte(pw), bcrypt.DefaultCost)
 	if err != nil {
 		return "", err

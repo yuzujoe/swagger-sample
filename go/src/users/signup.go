@@ -3,7 +3,6 @@ package users
 import (
 	"codegen/go/db"
 	"codegen/go/models"
-	"codegen/go/src/util/crypt"
 	"log"
 	"net/http"
 	"time"
@@ -51,7 +50,7 @@ func handleSignup(c *gin.Context) {
 func createUser(phone string, password string) string {
 	db := db.Db
 	tx := db.Begin()
-	hashPwd, _ := crypt.PasswordHash(password)
+	hashPwd, _ := passwordHash(password)
 	user := models.User{Phone: phone, Password: hashPwd, UpdatedAt: time.Now(), CreatedAt: time.Now()}
 	if err := tx.Create(&user).Error; err != nil {
 		tx.Rollback()
