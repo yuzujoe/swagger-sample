@@ -1,4 +1,4 @@
-package middleware
+package server
 
 import (
 	"github.com/gin-contrib/cors"
@@ -6,7 +6,7 @@ import (
 )
 
 // Cors CORS設定
-func Cors() gin.HandlerFunc {
+func corsSet() gin.HandlerFunc {
 	config := cors.DefaultConfig()
 	config.AllowAllOrigins = true
 	return cors.New(config)
