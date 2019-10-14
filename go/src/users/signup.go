@@ -48,7 +48,7 @@ func HandleSignup(c *gin.Context) {
 }
 
 func createUser(phone string, password string) string {
-	db := db.Db
+	db := db.DB
 	tx := db.Begin()
 	hashPwd, _ := passwordHash(password)
 	user := models.User{Phone: phone, Password: hashPwd, UpdatedAt: time.Now(), CreatedAt: time.Now()}
