@@ -1,7 +1,6 @@
 package route
 
 import (
-	"codegen/go/src/users"
 	"net/http"
 	"os"
 
@@ -16,7 +15,7 @@ func Route() {
 	})
 
 	rg := r.Group("/api")
-	users.AddRoute(rg)
+	userRoute(rg)
 
 	r.Run(os.Getenv("PORT"))
 }
