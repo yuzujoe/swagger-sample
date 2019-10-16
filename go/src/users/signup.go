@@ -12,31 +12,26 @@ import (
 
 // ReqData リクエストのデータ
 type ReqData struct {
-	Phone    string `form:"phone" json:"phone" binding:"required"`
-	Password string `json:"password"`
+	Phone    string `json:"phone" binding:"required"`
+	Password string `json:"password" binding:"required"`
 }
 
 func HandleSignup(c *gin.Context) {
 	var reqData ReqData
 
-	// json形式なのかチェック
-	if err := c.ShouldBindJSON(&reqData); err != nil {
-		c.JSON(http.StatusBadRequest, err)
-	}
-
-	// 電話番号が空でないか確認
-	if reqData.Phone == "" {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"error": "電話番号を入力してください",
-		})
-		return
-	}
-
-	// パスワードが空でないか確認
-	if reqData.Password == "" {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"error": "パスワードを入力してください",
-		})
+	// エラーハンドリング
+	if err := c.Bind(&reqData); err != nil {
+		if reqData.Phone == "" {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"error": "電話番号を入力してください",
+			})
+			return
+		} else if reqData.Password == "" {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"error": "パスワードを入力してください",
+			})
+			return
+		}
 		return
 	}
 
