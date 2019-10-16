@@ -1,7 +1,7 @@
 package server
 
 import (
-	"codegen/go/db"
+	"codegen/go/mysql"
 	"codegen/go/route"
 
 	"github.com/gin-gonic/gin"
@@ -10,7 +10,7 @@ import (
 // StartServer サーバーの起動
 func StartServer() {
 
-	db.Init()
+	mysql.Init()
 
 	createServer()
 }

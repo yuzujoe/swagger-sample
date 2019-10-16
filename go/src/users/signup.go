@@ -1,8 +1,8 @@
 package users
 
 import (
-	"codegen/go/db"
 	"codegen/go/models"
+	"codegen/go/mysql"
 	"log"
 	"net/http"
 	"time"
@@ -48,7 +48,9 @@ func HandleSignup(c *gin.Context) {
 }
 
 func createUser(phone string, password string) string {
-	db := db.DB
+	mysql.ConnectDB()
+	defer mysql.CloseDB()
+	db := mysql.DB
 	tx := db.Begin()
 	hashPwd, _ := passwordHash(password)
 	user := models.User{Phone: phone, Password: hashPwd, UpdatedAt: time.Now(), CreatedAt: time.Now()}
