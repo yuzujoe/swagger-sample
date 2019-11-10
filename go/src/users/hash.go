@@ -16,5 +16,6 @@ func passwordHash(pw string) (string, error) {
 }
 
 func test() {
-	fmt.Println("")
+	fmt.Println("1")
+	fmt.Println("2")
 }
