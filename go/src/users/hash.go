@@ -1,6 +1,10 @@
 package users
 
-import "golang.org/x/crypto/bcrypt"
+import (
+	"fmt"
+
+	"golang.org/x/crypto/bcrypt"
+)
 
 // passwordHash ハッシュ化したパスワードの作成
 func passwordHash(pw string) (string, error) {
@@ -9,4 +13,8 @@ func passwordHash(pw string) (string, error) {
 		return "", err
 	}
 	return string(hash), err
+}
+
+func test() {
+	fmt.Println("")
 }
